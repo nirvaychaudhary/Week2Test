@@ -1,0 +1,14 @@
+create table if not exists dividend(company character varying(12), fiscal_year integer);
+
+truncate table dividend;
+
+insert into dividend(company, fiscal_year) values
+('AHPC', 20702071), ('AHPC', 20712072), ('AHPC', 20732074), ('AHPC', 20762077), 
+('CZBIL', 20692070), ('CZBIL', 20702071), ('CZBIL', 20712072), ('CZBIL', 20732074),
+('GBIME', 20692070), ('GBIME', 20702071), ('GBIME', 20712072), ('GBIME', 20732074);
+
+select * from dividend;
+
+select distinct (array_agg(concat('', d1.company))) as valuestocks
+from dividend as d1, dividend as d2, dividend as d3 where d1.company = d2.company and d2.company = d3.company 
+and d1.fiscal_year = d2.fiscal_year+10001 and d2.fiscal_year = d3.fiscal_year+10001;
